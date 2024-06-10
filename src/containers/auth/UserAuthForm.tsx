@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Github } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -41,8 +42,10 @@ export default function UserAuthForm() {
   });
 
   const onSubmit = async (data: UserFormValue) => {
+    // await signIn("github", { callbackUrl: callbackUrl ?? "/dashboard" });
     signIn("credentials", {
       email: data.email,
+      password: data.password,
       callbackUrl: callbackUrl ?? "/dashboard",
     });
   };
@@ -97,6 +100,18 @@ export default function UserAuthForm() {
           </Button>
         </form>
       </Form>
+
+      <Button
+        className="w-full"
+        variant="outline"
+        type="button"
+        onClick={() =>
+          signIn("github", { callbackUrl: callbackUrl ?? "/dashboard" })
+        }
+      >
+        <Github className="mr-2 h-4 w-4" />
+        Continue with Github
+      </Button>
     </>
   );
 }

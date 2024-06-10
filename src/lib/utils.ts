@@ -1,3 +1,4 @@
+import md5 from "md5";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -6,5 +7,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function saltAndHashPassword(password: string) {
-  return password;
+  return md5(password);
 }
