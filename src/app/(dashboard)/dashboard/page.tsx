@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -73,12 +74,41 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ModeToggle } from "@/components/ModeToggle";
+import { cn } from "@/lib/utils";
 
 export default function Dashboard() {
+  const [test, setTest] = React.useState(true);
+  const handleToggle = () => {
+    setTest(!test);
+  };
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-        <nav className="flex flex-col items-center gap-4 px-2 sm:py-4">
+    <div className="flex h-screen max-h-screen w-full flex-row overflow-hidden bg-muted/40">
+      <aside
+        className={cn(
+          "relative inset-y-0 left-0 z-10 hidden max-h-screen flex-col border-r border-dashed bg-background sm:flex",
+        )}
+      >
+        <Button
+          className={cn(
+            "absolute -right-3 top-7 z-20 h-7 w-7 cursor-pointer rounded-full border border-dashed bg-background",
+            !test && "rotate-180",
+          )}
+          variant="outline"
+          size="icon"
+        >
+          <ChevronLeft
+            className="text-foreground"
+            size={20}
+            onClick={handleToggle}
+          />
+        </Button>
+
+        <nav
+          className={cn(
+            "z-10 flex h-full w-20 flex-col items-center gap-4 px-4 duration-500 sm:py-4",
+            test ? "w-72" : "w-20",
+          )}
+        >
           <Link
             href="#"
             className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
@@ -142,7 +172,7 @@ export default function Dashboard() {
               <TooltipContent side="right">Customers</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
@@ -174,7 +204,7 @@ export default function Dashboard() {
           </TooltipProvider>
         </nav>
       </aside>
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+      <div className="flex w-full flex-col overflow-y-auto sm:gap-4 sm:py-4">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <Sheet>
             <SheetTrigger asChild>
@@ -266,7 +296,7 @@ export default function Dashboard() {
                 className="overflow-hidden rounded-full"
               >
                 <Image
-                  src="/placeholder-user.jpg"
+                  src="https://avatars.githubusercontent.com/u/124599?v=4"
                   width={36}
                   height={36}
                   alt="Avatar"
@@ -305,7 +335,7 @@ export default function Dashboard() {
                   <CardTitle className="text-4xl">$1,329</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="font-roboto-mono text-xs text-muted-foreground">
                     +25% from last week
                   </div>
                 </CardContent>
