@@ -33,8 +33,8 @@ export default function UserAuthForm() {
   const callbackUrl = searchParams.get("callbackUrl");
   const [loading, setLoading] = useState(false);
   const defaultValues = {
-    email: "demo@gmail.com",
-    password: "",
+    email: "minhphamba@gmail.com",
+    password: "123456",
   };
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
@@ -43,7 +43,7 @@ export default function UserAuthForm() {
 
   const onSubmit = async (data: UserFormValue) => {
     // await signIn("github", { callbackUrl: callbackUrl ?? "/dashboard" });
-    signIn("credentials", {
+    await signIn("credentials", {
       email: data.email,
       password: data.password,
       callbackUrl: callbackUrl ?? "/dashboard",
@@ -101,7 +101,7 @@ export default function UserAuthForm() {
         </form>
       </Form>
 
-      <Button
+      {/* <Button
         className="w-full"
         variant="outline"
         type="button"
@@ -111,7 +111,7 @@ export default function UserAuthForm() {
       >
         <Github className="mr-2 h-4 w-4" />
         Continue with Github
-      </Button>
+      </Button> */}
     </>
   );
 }

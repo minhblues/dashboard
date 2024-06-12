@@ -1,5 +1,4 @@
-export const gatewayUrl =
-  process.env.GATEWAY_URL || "https://admin.bookingo.vn";
+export const gatewayUrl = process.env.GATEWAY_URL;
 
 const config = { gatewayUrl };
 

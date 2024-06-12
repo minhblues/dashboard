@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import UserAuthForm from "./UserAuthForm";
 
@@ -19,7 +20,9 @@ export default function Login() {
               Please sign-in to your account and start the adventure
             </p>
           </div>
-          <UserAuthForm />
+          <Suspense>
+            <UserAuthForm />
+          </Suspense>
         </div>
       </div>
     </div>

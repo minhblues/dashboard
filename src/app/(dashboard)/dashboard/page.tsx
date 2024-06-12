@@ -75,8 +75,12 @@ import {
 } from "@/components/ui/tooltip";
 import { ModeToggle } from "@/components/ModeToggle";
 import { cn } from "@/lib/utils";
+import { signOut, useSession } from "next-auth/react";
+import { Label } from "@/components/ui/label";
 
 export default function Dashboard() {
+  const user = useSession();
+
   const [test, setTest] = React.useState(true);
   const handleToggle = () => {
     setTest(!test);
@@ -305,12 +309,25 @@ export default function Dashboard() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                {user?.data?.user?.name}
+                <br />
+                <Label className="font-normal text-xs">
+                  {user?.data?.user?.email}
+                </Label>
+              </DropdownMenuLabel>
+
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => {
+                  await signOut();
+                }}
+              >
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

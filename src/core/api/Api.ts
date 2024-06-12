@@ -111,6 +111,22 @@ class Api {
       ...config,
     });
   }
+
+  static async request(
+    method: HttpMethod,
+    url: string,
+    body?: any,
+    queryParams?: any,
+    config: AxiosRequestConfig = {},
+  ) {
+    return axiosInstance.request({
+      method,
+      url: url + convertObjectToQueryParams(queryParams),
+      data: convertObjectToBody(body, config),
+      ...apiRequestConfig,
+      ...config,
+    });
+  }
 }
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
