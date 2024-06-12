@@ -1,16 +1,14 @@
 import "next-auth/jwt";
+import { JWT } from "next-auth/jwt";
 import { cookies } from "next/headers";
-import NextAuth, {
-  CredentialsSignin,
-  NextAuthConfig,
-  type DefaultSession,
-} from "next-auth";
+import { CredentialsSignin, NextAuthConfig } from "next-auth";
+// providers
 import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-// Your own logic for dealing with plaintext password strings; be careful!
+// lib
 import { saltAndHashPassword } from "@/lib/utils";
-import AuthApi, { UserType } from "../../services/AuthApi";
-import { JWT } from "next-auth/jwt";
+// services
+import AuthApi, { UserType } from "@/services/AuthApi";
 class InvalidLoginError extends CredentialsSignin {
   code = "Invalid identifier or password";
 }
@@ -20,35 +18,15 @@ declare module "next-auth" {
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: {
-      id: number;
-      syId: string;
-      adminId: string;
-      name: string;
-      email: string;
-      status: number;
-      token: string;
-      tokenExpiredAt: Date;
-      createdAt: null;
-      updatedAt: Date;
-      deletedAt: null;
+    user: UserType & {
+      image: string;
     };
   }
 }
 
 declare module "next-auth/jwt" {
-  interface JWT {
-    id: number;
-    syId: string;
-    adminId: string;
-    name: string;
-    email: string;
-    status: number;
-    token: string;
-    tokenExpiredAt: Date;
-    createdAt: null;
-    updatedAt: Date;
-    deletedAt: null;
+  interface JWT extends UserType {
+    image: string;
   }
 }
 export const authConfig = {
